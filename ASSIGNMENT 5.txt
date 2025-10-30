@@ -1,0 +1,384 @@
+								Assignment 5
+								
+Note : To solve below queries use “hr” database
+
+
+1. Display first name and last name after converting the first letter of each name to upper case and the rest to lower case.
+
+
+	mysql> SELECT CONCAT(RIGHT(FIRST_NAME,1),LOWER(SUBSTRING(FIRST_NAME,1))) AS FIRST_NAME, CONCAT(RIGHT(LAST_NAME,1),LOWER(SUBSTRING(LAST_NAME,1))) AS
+	LAST_NAME FROM employees LIMIT 4;
+	+------------+-----------+
+	| FIRST_NAME | LAST_NAME |
+	+------------+-----------+
+	| Nellen     | Label     |
+	| Rsundar    | Eande     |
+	| Emozhe     | Natkinson |
+	| Ddavid     | Naustin   |
+	+------------+-----------+
+	4 rows in set (0.00 sec)
+
+	mysql> 
+
+
+2. Display the first word in job title.
+
+
+	mysql> SELECT SUBSTRING_INDEX (JOB_TITLE ,' ',1) as JOB_TITLE FROM jobs;
+	+----------------+
+	| JOB_TITLE      |
+	+----------------+
+	| President      |
+	| Administration |
+	| Administration |
+	| Finance        |
+	| Accountant     |
+	| Accounting     |
+	| Public         |
+	| Sales          |
+	| Sales          |
+	| Purchasing     |
+	| Purchasing     |
+	| Stock          |
+	| Stock          |
+	| Shipping       |
+	| Programmer     |
+	| Marketing      |
+	| Marketing      |
+	| Human          |
+	| Public         |
+	+----------------+
+	19 rows in set (0.00 sec)
+
+
+
+3. Display the length of first name for employees where last name 
+contain character ‘b’ after 3rd position.
+
+
+	mysql> SELECT LENGTH(FIRST_NAME) AS LENGTH FROM employees WHERE SUBSTRING(LAST_NAME,3,1)='b';
+	+--------+
+	| LENGTH |
+	+--------+
+	|      7 |
+	|      5 |
+	+--------+
+	2 rows in set (0.00 sec)
+
+	mysql> 
+
+
+
+4. Display first name in upper case and email address in lower case for employees where the first name and email address are same irrespective of the case.
+
+	mysql> SELECT UPPER(FIRST_NAME) AS FRIST_NAME,  LOWER(EMAIL) AS EMAIL FROM employees WHERE LOWER(FIRST_NAME)=LOWER(EMAIL);
+	Empty set (0.01 sec)
+
+	mysql> 
+
+5. Display first name, salary, and round the salary to thousands.
+
+	mysql> SELECT FIRST_NAME, ROUND(SALARY,-3) FROM employees LIMIT 4;
+	+------------+------------------+
+	| FIRST_NAME | ROUND(SALARY,-3) |
+	+------------+------------------+
+	| STEVEN     |            24000 |
+	| NEENA      |            17000 |
+	| LEX        |            17000 |
+	| ALEXANDER  |             9000 |
+	+------------+------------------+
+	4 rows in set (0.00 sec)
+
+
+6. Display employee ID and the date on which he ended his previous job.
+
+	mysql> SELECT EMPLOYEE_ID ,MAX(END_DATE) FROM job_history GROUP BY EMPLOYEE_
+	+-------------+---------------+
+	| EMPLOYEE_ID | MAX(END_DATE) |
+	+-------------+---------------+
+	|           0 | 0000-00-00    |
+	|         101 | 1997-03-15    |
+	|         102 | 1998-07-24    |
+	|         114 | 1999-12-31    |
+	|         122 | 1999-12-31    |
+	|         176 | 1999-12-31    |
+	|         200 | 1998-12-31    |
+	|         201 | 1999-12-19    |
+	+-------------+---------------+
+	8 rows in set (0.00 sec)
+
+	mysql> 
+
+
+
+7. Display first name and date of first salary of the employees.
+(Consider 1st day of month as salary day) HINT: LAST_DAY.
+
+	mysql> SELECT FIRST_NAME,ADDDATE(LAST_DAY(HIRE_DATE),INTERVAL 1 DAY) AS first_salary_day FROM employees limit 4;
+	+------------+------------------+
+	| FIRST_NAME | first_salary_day |
+	+------------+------------------+
+	| STEVEN     | 1987-07-01       |
+	| NEENA      | 1987-07-01       |
+	| LEX        | 1987-07-01       |
+	| ALEXANDER  | 1987-07-01       |
+	+------------+------------------+
+	4 rows in set (0.00 sec)
+
+8. Display first name and experience of the employees.
+
+	mysql> SELECT FIRST_NAME,
+	    -> CONCAT(
+	    -> TIMESTAMPDIFF(YEAR,HIRE_DATE,NOW()),' YEARS ',
+	    -> (TIMESTAMPDIFF(MONTH,HIRE_DATE,NOW()))%4,' Months') 
+	    -> AS experience 
+	    -> FROM employees 
+	    -> limit 4;
+	+------------+-------------------+
+	| FIRST_NAME | experience        |
+	+------------+-------------------+
+	| STEVEN     | 38 YEARS 0 Months |
+	| NEENA      | 38 YEARS 0 Months |
+	| LEX        | 38 YEARS 0 Months |
+	| ALEXANDER  | 38 YEARS 0 Months |
+	+------------+-------------------+
+	4 rows in set (0.00 sec)
+
+
+
+9. Display first name of employees who joined in 2001.
+
+
+	mysql> SELECT FIRST_NAME FROM employees WHERE YEAR(HIRE_DATE)=2001;
+	Empty set (0.00 sec)
+
+	mysql> 
+
+10. Display employees who joined in the current year.
+
+	mysql> SELECT * FROM employees WHERE YEAR(HIRE_DATE)=YEAR(NOW());
+	Empty set (0.01 sec)
+
+
+11. Display the number of days between system date and 1st January 2011.
+
+
+	mysql> SELECT TIMESTAMPDIFF(DAY,'2011-01-01',NOW());
+	+---------------------------------------+
+	| TIMESTAMPDIFF(DAY,'2011-01-01',NOW()) |
+	+---------------------------------------+
+	|                                  5416 |
+	+---------------------------------------+
+	1 row in set (0.00 sec)
+
+
+12. Display number of employees joined after 15th of the month.
+
+	mysql> SELECT COUNT(EMPLOYEE_ID) FROM employees
+	    -> WHERE DAY(HIRE_DATE) > 15;
+	+--------------------+
+	| COUNT(EMPLOYEE_ID) |
+	+--------------------+
+	|                 61 |
+	+--------------------+
+	1 row in set (0.00 sec)
+
+	mysql> 
+
+
+13. Display third highest salary of employees.	
+
+	mysql> SELECT salary FROM employees ORDER BY  salary DESC LIMIT 2,1;
+	+----------+
+	| salary   |
+	+----------+
+	| 17000.00 |
+	+----------+
+	1 row in set (0.00 sec)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+Note : To solve below queries use “spj” database
+
+
+1. Display all the Suppliers, belonging to cities starting with the letter ‘L’.
+
+	mysql> SELECT * FROM S
+	    -> WHERE LEFT(city,1)='L'
+	    -> ;
+	+----+-------+--------+--------+
+	| S# | Sname | status | city   |
+	+----+-------+--------+--------+
+	| S1 | Smith |     20 | London |
+	| S4 | Clark |     20 | London |
+	+----+-------+--------+--------+
+	2 rows in set (0.00 sec)
+
+	mysql> 
+
+
+2. Display all the Jobs, with the third letter in JNAME as ‘n’.
+
+
+	mysql> SELECT * FROM J
+	    -> WHERE SUBSTRING(Jname,3,1)='n';
+	+----+---------+--------+
+	| J# | Jname   | City   |
+	+----+---------+--------+
+	| J2 | Punch   | Rome   |
+	| J4 | Console | Athens |
+	+----+---------+--------+
+	2 rows in set (0.00 sec)
+
+	mysql> 
+
+
+3. Display all the Supplier names with the initial letter capital.
+
+	mysql> SELECT CONCAT(UPPER(SUBSTRING(Sname,1,1)),SUBSTRING(SNAME,2)) AS NAME FROM S ;
+	+-------+
+	| NAME  |
+	+-------+
+	| Smith |
+	| Jones |
+	| Blake |
+	| Clark |
+	| Adams |
+	+-------+
+	5 rows in set (0.01 sec)
+
+	mysql> 
+
+
+4. Display all the Supplier names in upper case.
+	mysql> SELECT UPPER(Sname) FROM S;
+	+--------------+
+	| UPPER(Sname) |
+	+--------------+
+	| SMITH        |
+	| JONES        |
+	| BLAKE        |
+	| CLARK        |
+	| ADAMS        |
+	+--------------+
+	5 rows in set (0.00 sec)
+
+mysql> 
+
+5. Display all the Supplier names in lower case.
+
+	mysql> SELECT LOWER(Sname) FROM S;
+	+--------------+
+	| LOWER(Sname) |
+	+--------------+
+	| smith        |
+	| jones        |
+	| blake        |
+	| clark        |
+	| adams        |
+	+--------------+
+	5 rows in set (0.00 sec)
+
+	mysql> 
+
+
+6. Display the Supplier names and the lengths of the names.
+
+
+	mysql> SELECT Sname, LENGTH(Sname) AS length_of_name FROM S;
+	+-------+----------------+
+	| Sname | length_of_name |
+	+-------+----------------+
+	| Smith |              5 |
+	| Jones |              5 |
+	| Blake |              5 |
+	| Clark |              5 |
+	| Adams |              5 |
+	+-------+----------------+
+	5 rows in set (0.00 sec)
+
+	mysql> 
+
+7. Display the current day (e.g. Thursday).
+	mysql> SELECT DAYNAME(NOW()) AS Current_day;
+	+-------------+
+	| Current_day |
+	+-------------+
+	| Thursday    |
+	+-------------+
+	1 row in set (0.00 sec)
+
+	mysql> 
+
+8. Display the minimum Status in the Supplier table.
+
+	mysql> SELECT MIN(Status) from S;
+	+-------------+
+	| MIN(Status) |
+	+-------------+
+	|          10 |
+	+-------------+
+	1 row in set (0.00 sec)
+
+9. Display the maximum Weight in the Parts table.
+	
+	mysql> SELECT MAX(weight) FROM P;
+	+-------------+
+	| MAX(weight) |
+	+-------------+
+	|          19 |
+	+-------------+
+	1 row in set (0.00 sec)
+
+	mysql> 
+
+
+10. Display the average Weight of the Parts.
+
+
+	mysql> SELECT AVG(weight) 
+	    -> FROM P;
+	+-------------+
+	| AVG(weight) |
+	+-------------+
+	|     15.1667 |
+	+-------------+
+	1 row in set (0.00 sec)
+
+11. Display the total Quantity sold for part ‘P1’.
+
+	mysql> SELECT SUM(QTY) FROM sp WHERE `P#`='P1';
+	+----------+
+	| SUM(QTY) |
+	+----------+
+	|     1000 |
+	+----------+
+	1 row in set (0.00 sec)
+
+	
+
+12. Display all the Supplier names (with ‘la’ replaced by ‘ro’).
+HINT: REPLACE.
+
+	mysql> SELECT Sname,REPLACE(Sname,'la','ro') AS UPDATED_NAME FROM S;
+	+-------+--------------+
+	| Sname | UPDATED_NAME |
+	+-------+--------------+
+	| Smith | Smith        |
+	| Jones | Jones        |
+	| Blake | Broke        |
+	| Clark | Crork        |
+	| Adams | Adams        |
+	+-------+--------------+
+	5 rows in set (0.00 sec)
+
+	mysql> 
+
+									
