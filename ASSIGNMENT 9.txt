@@ -1,0 +1,102 @@
+									Assignment 9
+Grant, Revoke and Views.
+Create user by name sunbeam in root login
+Note: To solve below queries use ‘classwork’ database.
+
+
+
+
+1. Give UPDATE privileges on BOOKS table to sunbeam.
+
+
+	root>GRANT UPDATE ON books TO 'sunbeam'@'localhost' WITH GRANT OPTION;
+	Query OK, 0 rows affected (0.01 sec)
+
+
+2. Give sunbeam the right to SELECT the data from BOOKS,EMP,DEPT
+tables.
+
+
+	root>GRANT SELECT ON books TO 'sunbeam'@'localhost' WITH GRANT OPTION;
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+	
+	root>GRANT SELECT ON emp TO 'sunbeam'@'localhost' WITH GRANT OPTION;
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+
+	root>GRANT SELECT ON dept TO 'sunbeam'@'localhost' WITH GRANT OPTION;
+	Query OK, 0 rows affected (0.08 sec)
+
+	root>
+
+
+
+
+
+3. Give INSERT privilege on EMP table to sunbeam
+
+	root>GRANT INSERT ON emp TO 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.00 sec)
+
+
+
+4. Give DELETE privileges on DEPT table to sunbeam
+
+
+	root>GRANT DELETE ON dept TO 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.02 sec)
+
+	root>
+
+
+5. Take the UPDATE privilege on BOOKS table away from sunbeam.
+
+
+	root>REVOKE UPDATE ON books FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+
+
+6. Take the INSERT privilege on EMP table away from sunbeam.
+
+
+	root>REVOKE INSERT ON emp FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+
+
+7. Take the DELETE privilege on DEPT table away from sunbeam.
+
+
+	root>REVOKE DELETE ON dept FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.08 sec)
+
+	root>
+
+
+
+8. Take the SELECT privilege on BOOKS,EMP,DEPT tables away from
+sunbeam.
+
+
+	root>REVOKE SELECT ON books FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+
+	root>REVOKE SELECT ON emp FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.01 sec)
+
+	root>
+
+	root>REVOKE SELECT ON dept FROM 'sunbeam'@'localhost';
+	Query OK, 0 rows affected (0.08 sec)
+
+	root>
+
+
