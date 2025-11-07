@@ -1,0 +1,691 @@
+
+1.Write a MongoDB query to display all the documents in the collection restaurants.
+
+
+> db.res.find().pretty().limit(1)
+{
+	"_id" : ObjectId("690db23bc49f5690f346b792"),
+	"address" : {
+		"building" : "7114",
+		"coord" : [
+			-73.9068506,
+			40.6199034
+		],
+		"street" : "Avenue U",
+		"zipcode" : "11234"
+	},
+	"borough" : "Brooklyn",
+	"cuisine" : "Delicatessen",
+	"grades" : [
+		{
+			"date" : ISODate("2014-05-29T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2014-01-14T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-08-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 8
+		},
+		{
+			"date" : ISODate("2012-07-18T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-03-09T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		},
+		{
+			"date" : ISODate("2011-10-14T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		}
+	],
+	"name" : "Wilken'S Fine Food",
+	"restaurant_id" : "40356483"
+}
+> 
+
+
+
+2. Write a MongoDB query to display the fields restaurant_id, name, borough and cuisine for all the documents in the collection restaurant.
+
+> db.res.find({},{restaurant_id:1,name:1,cuisine:1}).limit(3).pretty()
+{
+	"_id" : ObjectId("690db23bc49f5690f346b792"),
+	"cuisine" : "Delicatessen",
+	"name" : "Wilken'S Fine Food",
+	"restaurant_id" : "40356483"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b793"),
+	"cuisine" : "Irish",
+	"name" : "Dj Reynolds Pub And Restaurant",
+	"restaurant_id" : "30191841"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b794"),
+	"cuisine" : "Bakery",
+	"name" : "Morris Park Bake Shop",
+	"restaurant_id" : "30075445"
+}
+> 
+
+
+
+3. Write a MongoDB query to display the fields restaurant_id, name, borough and cuisine, but exclude the field _id for all the documents in the collection restaurant.
+
+
+> db.res.find({},{cuisine:1,name:1,restaurant_id:1,_id:0}).limit(3).pretty()
+
+{
+	"cuisine" : "Delicatessen",
+	"name" : "Wilken'S Fine Food",
+	"restaurant_id" : "40356483"
+}
+{
+	"cuisine" : "Irish",
+	"name" : "Dj Reynolds Pub And Restaurant",
+	"restaurant_id" : "30191841"
+}
+{
+	"cuisine" : "Bakery",
+	"name" : "Morris Park Bake Shop",
+	"restaurant_id" : "30075445"
+}
+> 
+
+
+4. Write a MongoDB query to display the fields restaurant_id, name, borough and zip code, but exclude the field _id for all the documents in the collection restaurant.
+
+
+> db.res.find({},{restaurant_id:1,name:1,borough:1,zipcode:1,_id:0}).pretty().limit(4)
+{
+	"borough" : "Brooklyn",
+	"name" : "Wilken'S Fine Food",
+	"restaurant_id" : "40356483"
+}
+{
+	"borough" : "Manhattan",
+	"name" : "Dj Reynolds Pub And Restaurant",
+	"restaurant_id" : "30191841"
+}
+{
+	"borough" : "Bronx",
+	"name" : "Morris Park Bake Shop",
+	"restaurant_id" : "30075445"
+}
+{
+	"borough" : "Queens",
+	"name" : "Sal'S Deli",
+	"restaurant_id" : "40361618"
+}
+> 
+
+
+5. Write a MongoDB query to display all the restaurant which is in the borough Bronx.
+
+
+> db.res.find(
+... {
+... borough:{ $eq : "Bronx"}
+... }).limit(3).pretty()
+{
+	"_id" : ObjectId("690db23bc49f5690f346b794"),
+	"address" : {
+		"building" : "1007",
+		"coord" : [
+			-73.856077,
+			40.848447
+		],
+		"street" : "Morris Park Ave",
+		"zipcode" : "10462"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Bakery",
+	"grades" : [
+		{
+			"date" : ISODate("2014-03-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 2
+		},
+		{
+			"date" : ISODate("2013-09-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 6
+		},
+		{
+			"date" : ISODate("2013-01-24T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2011-11-23T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2011-03-10T00:00:00Z"),
+			"grade" : "B",
+			"score" : 14
+		}
+	],
+	"name" : "Morris Park Bake Shop",
+	"restaurant_id" : "30075445"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b79f"),
+	"address" : {
+		"building" : "1006",
+		"coord" : [
+			-73.84856870000002,
+			40.8903781
+		],
+		"street" : "East 233 Street",
+		"zipcode" : "10466"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+	"grades" : [
+		{
+			"date" : ISODate("2014-04-24T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-09-05T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-02-21T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2012-07-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		},
+		{
+			"date" : ISODate("2011-07-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 5
+		}
+	],
+	"name" : "Carvel Ice Cream",
+	"restaurant_id" : "40363093"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7a5"),
+	"address" : {
+		"building" : "1236",
+		"coord" : [
+			-73.8893654,
+			40.81376179999999
+		],
+		"street" : "238 Spofford Ave",
+		"zipcode" : "10474"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Chinese",
+	"grades" : [
+		{
+			"date" : ISODate("2013-12-30T00:00:00Z"),
+			"grade" : "A",
+			"score" : 8
+		},
+		{
+			"date" : ISODate("2013-01-08T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-06-12T00:00:00Z"),
+			"grade" : "B",
+			"score" : 15
+		}
+	],
+	"name" : "Happy Garden",
+	"restaurant_id" : "40363289"
+}
+> 
+
+
+
+6. Write a MongoDB query to display the first 5 restaurant which is in the borough Bronx.
+
+> db.res.find(
+... {
+... borough:{ $eq : "Bronx"}
+... }).pretty().limit(5)
+{
+	"_id" : ObjectId("690db23bc49f5690f346b794"),
+	"address" : {
+		"building" : "1007",
+		"coord" : [
+			-73.856077,
+			40.848447
+		],
+		"street" : "Morris Park Ave",
+		"zipcode" : "10462"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Bakery",
+	"grades" : [
+		{
+			"date" : ISODate("2014-03-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 2
+		},
+		{
+			"date" : ISODate("2013-09-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 6
+		},
+		{
+			"date" : ISODate("2013-01-24T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2011-11-23T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2011-03-10T00:00:00Z"),
+			"grade" : "B",
+			"score" : 14
+		}
+	],
+	"name" : "Morris Park Bake Shop",
+	"restaurant_id" : "30075445"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b79f"),
+	"address" : {
+		"building" : "1006",
+		"coord" : [
+			-73.84856870000002,
+			40.8903781
+		],
+		"street" : "East 233 Street",
+		"zipcode" : "10466"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+	"grades" : [
+		{
+			"date" : ISODate("2014-04-24T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-09-05T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-02-21T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2012-07-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		},
+		{
+			"date" : ISODate("2011-07-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 5
+		}
+	],
+	"name" : "Carvel Ice Cream",
+	"restaurant_id" : "40363093"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7a5"),
+	"address" : {
+		"building" : "1236",
+		"coord" : [
+			-73.8893654,
+			40.81376179999999
+		],
+		"street" : "238 Spofford Ave",
+		"zipcode" : "10474"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Chinese",
+	"grades" : [
+		{
+			"date" : ISODate("2013-12-30T00:00:00Z"),
+			"grade" : "A",
+			"score" : 8
+		},
+		{
+			"date" : ISODate("2013-01-08T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-06-12T00:00:00Z"),
+			"grade" : "B",
+			"score" : 15
+		}
+	],
+	"name" : "Happy Garden",
+	"restaurant_id" : "40363289"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7b6"),
+	"address" : {
+		"building" : "277",
+		"coord" : [
+			-73.8941893,
+			40.8634684
+		],
+		"street" : "East Kingsbridge Road",
+		"zipcode" : "10458"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Chinese",
+	"grades" : [
+		{
+			"date" : ISODate("2014-03-03T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-09-26T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2013-03-19T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-08-29T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		},
+		{
+			"date" : ISODate("2011-08-17T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		}
+	],
+	"name" : "Happy Garden",
+	"restaurant_id" : "40364296"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7b8"),
+	"address" : {
+		"building" : "2300",
+		"coord" : [
+			-73.8786113,
+			40.8502883
+		],
+		"street" : "Southern Boulevard",
+		"zipcode" : "10460"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "American ",
+	"grades" : [
+		{
+			"date" : ISODate("2014-05-28T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		},
+		{
+			"date" : ISODate("2013-06-19T00:00:00Z"),
+			"grade" : "A",
+			"score" : 4
+		},
+		{
+			"date" : ISODate("2012-06-15T00:00:00Z"),
+			"grade" : "A",
+			"score" : 3
+		}
+	],
+	"name" : "Wild Asia",
+	"restaurant_id" : "40357217"
+}
+> 
+
+
+
+7.Write a MongoDB query to display the next 5 restaurants after skipping first 5 which are in the borough Bronx.
+
+
+> db.res.find({
+... borough:{ $eq: "Bronx"}
+... }).skip(5).limit(5).pretty()
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7c6"),
+	"address" : {
+		"building" : "658",
+		"coord" : [
+			-73.81363999999999,
+			40.82941100000001
+		],
+		"street" : "Clarence Ave",
+		"zipcode" : "10465"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "American ",
+	"grades" : [
+		{
+			"date" : ISODate("2014-06-21T00:00:00Z"),
+			"grade" : "A",
+			"score" : 5
+		},
+		{
+			"date" : ISODate("2012-07-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		}
+	],
+	"name" : "Manhem Club",
+	"restaurant_id" : "40364363"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7dc"),
+	"address" : {
+		"building" : "2222",
+		"coord" : [
+			-73.84971759999999,
+			40.8304811
+		],
+		"street" : "Haviland Avenue",
+		"zipcode" : "10462"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "American ",
+	"grades" : [
+		{
+			"date" : ISODate("2014-12-18T00:00:00Z"),
+			"grade" : "A",
+			"score" : 7
+		},
+		{
+			"date" : ISODate("2014-05-01T00:00:00Z"),
+			"grade" : "B",
+			"score" : 17
+		},
+		{
+			"date" : ISODate("2013-03-14T00:00:00Z"),
+			"grade" : "A",
+			"score" : 12
+		},
+		{
+			"date" : ISODate("2012-09-20T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2012-02-08T00:00:00Z"),
+			"grade" : "B",
+			"score" : 19
+		}
+	],
+	"name" : "The New Starling Athletic Club Of The Bronx",
+	"restaurant_id" : "40364956"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b7fa"),
+	"address" : {
+		"building" : "72",
+		"coord" : [
+			-73.92506,
+			40.8275556
+		],
+		"street" : "East  161 Street",
+		"zipcode" : "10451"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "American ",
+	"grades" : [
+		{
+			"date" : ISODate("2014-04-15T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2013-11-14T00:00:00Z"),
+			"grade" : "A",
+			"score" : 4
+		},
+		{
+			"date" : ISODate("2013-07-29T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-12-31T00:00:00Z"),
+			"grade" : "B",
+			"score" : 15
+		},
+		{
+			"date" : ISODate("2012-05-30T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		},
+		{
+			"date" : ISODate("2012-01-09T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2011-08-15T00:00:00Z"),
+			"grade" : "C",
+			"score" : 37
+		}
+	],
+	"name" : "Yankee Tavern",
+	"restaurant_id" : "40365499"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b810"),
+	"address" : {
+		"building" : "331",
+		"coord" : [
+			-73.87786539999999,
+			40.8724377
+		],
+		"street" : "East  204 Street",
+		"zipcode" : "10467"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "Irish",
+	"grades" : [
+		{
+			"date" : ISODate("2014-08-26T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2014-03-26T00:00:00Z"),
+			"grade" : "B",
+			"score" : 23
+		},
+		{
+			"date" : ISODate("2013-09-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		},
+		{
+			"date" : ISODate("2012-12-18T00:00:00Z"),
+			"grade" : "B",
+			"score" : 27
+		},
+		{
+			"date" : ISODate("2011-10-20T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		}
+	],
+	"name" : "Mcdwyers Pub",
+	"restaurant_id" : "40365893"
+}
+{
+	"_id" : ObjectId("690db23bc49f5690f346b829"),
+	"address" : {
+		"building" : "5820",
+		"coord" : [
+			-73.9002615,
+			40.885186
+		],
+		"street" : "Broadway",
+		"zipcode" : "10463"
+	},
+	"borough" : "Bronx",
+	"cuisine" : "American ",
+	"grades" : [
+		{
+			"date" : ISODate("2014-02-26T00:00:00Z"),
+			"grade" : "A",
+			"score" : 5
+		},
+		{
+			"date" : ISODate("2013-10-09T00:00:00Z"),
+			"grade" : "B",
+			"score" : 19
+		},
+		{
+			"date" : ISODate("2013-05-15T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2012-11-20T00:00:00Z"),
+			"grade" : "B",
+			"score" : 18
+		},
+		{
+			"date" : ISODate("2011-10-17T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2011-06-22T00:00:00Z"),
+			"grade" : "C",
+			"score" : 35
+		}
+	],
+	"name" : "The Punch Bowl",
+	"restaurant_id" : "40366497"
+}
+> 
+
+
