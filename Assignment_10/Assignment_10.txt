@@ -1,0 +1,117 @@
+Database Technologies – Assignment 10
+PL-SQL
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+
+1. Write a procedure that computes the perimeter and the area of a rectangle. Define your own values for the length and width. (Assuming that L and W are the length and width of the rectangle, Perimeter = 2*(L+W) and Area = L*W.
+
+sunbeam> CALL ps_rectangle(10,20);
++------+-------+------+-----------+
+| leng | width | area | perimeter |
++------+-------+------+-----------+
+|   10 |    20 |  200 |        60 |
++------+-------+------+-----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+
+
+
+2. Write a procedure that declares an integer variable called num, assigns a value to it, and computes and inserts into the temp table the value of the variable itself, its square, and its cube. 
+
+
+
+sunbeam> SOURCE /home/dell/Desktop/DBDA_AUG_2025/RDBMS/Assignments/Assignment_10/Ques02.sql
+Query OK, 0 rows affected (0.07 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+sunbeam> truncate temp;
+Query OK, 0 rows affected (0.06 sec)
+
+sunbeam> select * from temp;
+Empty set (0.00 sec)
+
+sunbeam> CALL ps_sqr_cube(5);
+Query OK, 1 row affected (0.01 sec)
+
+sunbeam> CALL ps_sqr_cube(10);
+Query OK, 1 row affected (0.01 sec)
+
+sunbeam> select * from temp;
++--------+--------+-------+
+| number | Square | cube_ |
++--------+--------+-------+
+|      5 |     25 |   125 |
+|     10 |    100 |  1000 |
++--------+--------+-------+
+2 rows in set (0.00 sec)
+
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+
+3.Create a procedure to Convert a temperature in Fahrenheit (F) to its equivalent in Celsius (C) and vice versa. The required formulae are:- C= (F-32)*5/9 F= 9/5*C + 32
+
+-- SOURCE /home/dell/Desktop/DBDA_AUG_2025/RDBMS/Assignments/Assignment_10/Ques03.sql
+
+/*
+
+sunbeam> CALL ps_temperature (112,'C');
++-----------------------+
+| Celsius_To_Fahrenheit |
++-----------------------+
+|                   234 |
++-----------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+*/
+
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+
+4.Create a procedure to Convert a number of inches into yards, feet, and inches. For example, 124 inches equals 3 yards, 1 foot, and 4 inches.
+
+
+sunbeam> CALL ps_scale(142);
++------+-------+-------+--------+
+| num  | yards | feets | inches |
++------+-------+-------+--------+
+|  142 |     3 |     2 |     10 |
++------+-------+-------+--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+5. Your block should read in two real numbers and tell whether the product of the two numbers is equal to or greater than 100.
+
+
+sunbeam> CALL ps_product(10,10);
++------------------+
+| RESULT           |
++------------------+
+| GREATER OR EQUAL |
++------------------+
+1 row in set (0.00 sec)
+
+
+-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+
+
+
+
