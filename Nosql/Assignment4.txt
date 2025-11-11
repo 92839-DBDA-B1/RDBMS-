@@ -1,0 +1,213 @@
+1.Write a MongoDB query to find the restaurant Id, name and grades for those restaurants where the 2nd element of grades array contains a grade of "A" and score 9 on an ISODate "2014-08-11T00:00:00Z".
+
+
+> db.res.find({
+...     "grades.1.grade":'A',
+...     "grades.1.score":9,
+...     "grades.1.date":ISODate("2014-08-11T00:00:00Z")},
+...     {
+...         restaurant_id:1,
+...         name:1,
+...         grades:1
+...     }).pretty()
+{
+	"_id" : ObjectId("690db23bc49f5690f346bdc2"),
+	"grades" : [
+		{
+			"date" : ISODate("2015-01-12T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2014-08-11T00:00:00Z"),
+			"grade" : "A",
+			"score" : 9
+		},
+		{
+			"date" : ISODate("2014-01-14T00:00:00Z"),
+			"grade" : "A",
+			"score" : 13
+		},
+		{
+			"date" : ISODate("2013-02-07T00:00:00Z"),
+			"grade" : "A",
+			"score" : 10
+		},
+		{
+			"date" : ISODate("2012-04-30T00:00:00Z"),
+			"grade" : "A",
+			"score" : 11
+		}
+	],
+	"name" : "Club Macanudo (Cigar Bar)",
+	"restaurant_id" : "40526406"
+}
+> 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2.Write a MongoDB query which will select the restaurant Id, name and grades for those
+restaurants which returns 0 as a remainder after dividing the score by 7.
+
+
+> db.res.find({
+...     "grades.score":{$mod:[7,0]}
+... },{
+...     restaurant_id:1,name:1,grades:1,_id:0
+... }).count()
+1585
+
+
+> db.res.aggregate([{
+...     $match:{
+...         'grades.score':{$mod:[7,0]}
+...     }
+... },{$project:{restaurant_id:1,name:1,grades:1,_id:0}},{$count:"totalcount"}])
+{ "totalcount" : 1585 }
+> 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3. Write a MongoDB query to arrange the name of the restaurants in ascending order along with all the columns.(using pipeline)
+
+
+db.res.find({},{name:1}).sort({name:1})
+
+> db.res.aggregate([{
+...     $sort:{
+...         name:1
+...     }
+... },{$project:{name:1,_id:0}}])
+{ "name" : "(Lewis Drug Store) Locanda Vini E Olii" }
+{ "name" : "1 East 66Th Street Kitchen" }
+{ "name" : "101 Deli" }
+{ "name" : "101 Restaurant And Bar" }
+{ "name" : "1020 Bar" }
+{ "name" : "104-01 Foster Avenue Coffee Shop(Ups)" }
+{ "name" : "10Th Avenue Pizza & Cafe" }
+{ "name" : "111 Restaurant" }
+{ "name" : "15 East Restaurant" }
+{ "name" : "200 Fifth Avenue Restaurant & Sports Bar" }
+{ "name" : "21 Club" }
+{ "name" : "2A" }
+{ "name" : "3 Deli & Grill" }
+{ "name" : "3 Guys" }
+{ "name" : "3 Guys Resturant" }
+{ "name" : "42Nd Street Pizza Diner" }
+{ "name" : "44 & X Hell'S Kitchen" }
+{ "name" : "44 Sw Ristorante & Bar" }
+{ "name" : "5 Burro Cafe" }
+{ "name" : "525 Lex Restaurant & Bar" }
+Type "it" for more
+> 
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4. Write a MongoDB query to arrange the name of the restaurants in descending along with all the columns.(using pipeline).
+
+> db.res.aggregate([{
+...     $sort:{name:-1}
+... },{$project:{name:1,_id:0}}])
+{ "name" : "Zum Stammtisch" }
+{ "name" : "Zum Schneider" }
+{ "name" : "Zorba'S" }
+{ "name" : "Zebu Grill" }
+{ "name" : "Zaro'S Bread Basket" }
+{ "name" : "Zaro'S Bread Basket" }
+{ "name" : "Zaro'S Bread Basket" }
+{ "name" : "Zaro'S Bread Basket" }
+{ "name" : "Zaro'S Bread Basket" }
+{ "name" : "Zaro'S Bakery" }
+{ "name" : "Zaro'S Bakery" }
+{ "name" : "Zafi'S Luncheonette" }
+{ "name" : "Yvonne Yvonne Restaurant" }
+{ "name" : "Yura & Company On Madison" }
+{ "name" : "Yummy Kitchen" }
+{ "name" : "Your Bakery" }
+{ "name" : "Yonah Shimmels Knishes" }
+{ "name" : "Yolanda Pizzeria Restaurant" }
+{ "name" : "Yip'S" }
+{ "name" : "Yen Yen Restaurant" }
+Type "it" for more
+> 
+
+db.res.find({},{name:1}).sort({name:-1})
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5. Write a MongoDB query to arranged the name of the cuisine in ascending order and for that same cuisine borough should be in descending order.(using pipeline)
+
+
+> db.res.aggregate([{
+...     $sort:{
+...         cuisine:1,
+...         borough:-1
+...     }
+... },{$project:{cuisine:1,borough:1,_id:0}}])
+{ "borough" : "Manhattan", "cuisine" : "Afghan" }
+{ "borough" : "Manhattan", "cuisine" : "Afghan" }
+{ "borough" : "Manhattan", "cuisine" : "Afghan" }
+{ "borough" : "Manhattan", "cuisine" : "Afghan" }
+{ "borough" : "Queens", "cuisine" : "African" }
+{ "borough" : "Brooklyn", "cuisine" : "African" }
+{ "borough" : "Bronx", "cuisine" : "African" }
+{ "borough" : "Bronx", "cuisine" : "African" }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+{ "borough" : "Staten Island", "cuisine" : "American " }
+Type "it" for more
+> 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6. How many restaurants are there in the dataset?(using > db.res.aggregate([{
+...     $count:"total_records"
+... }])
+{ "total_records" : 3772 }
+> 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7. List all unique boroughs where restaurants are located.(using pipeline)
+
+
+> db.res.aggregate([{
+...     $group:{_id:'$borough'}
+... }])
+{ "_id" : "Staten Island" }
+{ "_id" : "Bronx" }
+{ "_id" : "Manhattan" }
+{ "_id" : "Queens" }
+{ "_id" : "Brooklyn" }
+> 
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8. Show the first 5 restaurant names and their boroughs.(using pipeline)
+
+> db.res.aggregate([{
+...     $limit:5
+... },{$project:{name:1,_id:0}}])
+{ "name" : "Wilken'S Fine Food" }
+{ "name" : "Dj Reynolds Pub And Restaurant" }
+{ "name" : "Morris Park Bake Shop" }
+{ "name" : "Sal'S Deli" }
+{ "name" : "Steve Chu'S Deli & Grocery" }
+> 
